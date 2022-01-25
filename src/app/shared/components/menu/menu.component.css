@@ -1,0 +1,32 @@
+.nav {
+  @apply bg-haiti
+  py-2
+  mx-auto
+  rounded-full
+  max-w-[20.625rem]
+  sm:px-2
+  sm:max-w-[23.4375rem];
+}
+
+.nav-list {
+  @apply flex
+  items-center
+  justify-evenly;
+}
+
+.nav-list__item {
+  @apply px-2
+  py-3
+  text-xs
+  font-bold
+  rounded-full
+  cursor-pointer
+  xs:px-5
+  sm:px-6
+  md:text-sm;
+}
+
+.nav-list__item.active {
+  @apply bg-radical-red
+  text-violet;
+}

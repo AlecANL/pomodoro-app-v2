@@ -1,0 +1,12 @@
+<nav class="nav">
+  <ul class="nav-list">
+    <li
+      (click)="handleTabChange(option.value)"
+      class="nav-list__item"
+      [class.active]="activeTab === option.value"
+      *ngFor="let option of menuOptions"
+    >
+      {{ option.name }}
+    </li>
+  </ul>
+</nav>

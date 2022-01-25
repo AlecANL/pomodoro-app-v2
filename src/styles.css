@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-violet
+  text-moonraker;
+}
+
+#app {
+  @apply px-6 pt-8 pb-12;
+}
+
+.wrapper {
+  @apply max-w-[28.125rem]
+  mx-auto;
+}
+
+.main-title {
+  @apply text-2xl
+  font-bold
+  sm:text-3xl;
+}
+
+.aqua h1 {
+  @apply text-cyan;
+}
+.roboto-slab {
+  @apply font-roboto-slab;
+}
+
+.red-radical h1 {
+  @apply text-radical-red;
+}
+
+.kumbh-sans {
+  @apply font-kumbh-sans;
+}
+
+.violet h1 {
+  @apply text-magenta;
+}
+
+.mono-space {
+  @apply font-space-mono;
+}
