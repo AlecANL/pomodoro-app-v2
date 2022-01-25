@@ -1,4 +1,4 @@
-<section class="timer">
+<section class="timer" (click)="toggle()">
   <button class="timer-btn">
     <svg id="svg" class="progress-ring" height="277" width="277">
       <circle
@@ -14,8 +14,11 @@
       ></circle>
     </svg>
     <div class="timing">
-      <h2>25:00</h2>
-      <span>start</span>
+      <!-- <h2>25:00</h2> -->
+      <h2>{{ present(time) }}</h2>
+      <span>
+        {{ togglePlay ? "paused" : "start" }}
+      </span>
     </div>
   </button>
 </section>
