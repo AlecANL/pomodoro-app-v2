@@ -1,0 +1,9 @@
+.config-btn {
+  @apply absolute;
+  inset-inline-start: 50%;
+  inset-block-end: -25%;
+}
+
+.app-content {
+  @apply relative;
+}

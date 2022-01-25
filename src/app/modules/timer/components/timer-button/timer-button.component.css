@@ -1,0 +1,52 @@
+.timer {
+  @apply relative
+  flex
+  items-center
+  justify-center
+  w-full
+  rounded-full
+  my-12
+  mx-auto
+  transition-all
+  h-[17.5rem]
+  max-w-[18rem]
+  max-h-[18rem]
+  sm:w-[18.75rem]
+  sm:h-[18.75rem]
+  lg:scale-150
+  lg:my-32;
+  background: linear-gradient(315deg, #2e325a, #0e112a);
+  box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
+  box-shadow: -50px -50px 100px #272c5a, 50px 50px 100px #121530;
+}
+
+.timer:active {
+  transform: scale(1.3);
+}
+
+.timer-btn {
+  @apply bg-haiti
+  rounded-full
+  flex
+  items-center
+  justify-center;
+  inline-size: 90%;
+  block-size: 90%;
+}
+.timing {
+  @apply absolute;
+}
+.timing h2 {
+  @apply text-[5rem]
+  font-bold
+  leading-[6.1875rem];
+}
+
+.timing span {
+  @apply font-bold
+  text-sm
+  inline-block
+  uppercase
+  tracking-[1.0625rem];
+  margin-inline-end: -20px;
+}
