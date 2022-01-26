@@ -1,0 +1,156 @@
+.modal {
+  @apply fixed
+  inset-0
+  px-6
+  flex
+  items-center
+  justify-center
+  min-h-full;
+  background: rgba(10, 12, 28, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.modal-content {
+  @apply bg-white
+  w-full
+  text-xs
+  text-violet
+  p-6
+  max-w-[33.75rem]
+  /* overflow-scroll */
+  md:h-[470px]
+  rounded-2xl;
+}
+
+.modal-header {
+  @apply flex
+  justify-between
+  items-center
+  pb-6;
+}
+
+.modal-header h5 {
+  @apply font-bold
+  text-xl
+  text-haiti;
+}
+
+.modal-header i {
+  color: #918b9f;
+}
+
+.modal-timing,
+.modal-font {
+  @apply py-6;
+}
+
+.modal-timing h5,
+.modal-font h5,
+.modal-colors h5 {
+  @apply text-center
+  uppercase
+  font-bold
+  text-xs
+  tracking-[.25rem]
+  md:text-base;
+}
+
+.timing {
+  @apply pt-4
+  flex
+  flex-col
+  gap-2
+  md:flex-row
+  md:gap-5;
+}
+
+.input-group {
+  @apply flex
+  items-center
+  justify-between
+  md:flex-col
+  md:flex-1;
+}
+
+.input-group {
+  @apply text-santas-grey
+  font-bold
+  text-xs;
+}
+
+.input-group span {
+  @apply mb-1
+  md:text-base;
+}
+
+.input-group input {
+  @apply bg-selago
+  p-4
+  text-haiti
+  font-bold
+  text-sm
+  rounded-lg
+  md:text-base
+  md:w-full;
+}
+
+.fonts,
+.colors {
+  @apply flex
+  justify-evenly
+  pt-4
+  items-center;
+}
+
+.fonts label,
+.colors label {
+  @apply outline
+  block
+  rounded-full
+  cursor-pointer
+  w-10
+  h-10;
+}
+.fonts input,
+.colors input {
+  display: none;
+}
+.modal-content {
+  @apply relative;
+}
+
+.modal-btn {
+  @apply mt-4 w-full
+  rounded-lg
+  px-12
+  py-5
+  bg-radical-red
+  text-white
+  font-bold
+  text-base
+  capitalize
+  md:text-lg
+  md:absolute
+  md:w-36
+  md:rounded-full;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-btn {
+    inset-inline-start: 50%;
+    inset-block-end: -30px;
+    transform: translateX(-50%);
+  }
+}
+
+.modal-font,
+.modal-colors {
+  @apply md:flex
+  items-center
+  justify-between;
+}
+
+.fonts,
+.colors {
+  @apply md:gap-4;
+}

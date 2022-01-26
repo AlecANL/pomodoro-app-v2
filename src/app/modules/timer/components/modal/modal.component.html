@@ -1,0 +1,79 @@
+<section *ngIf="isShowModal" class="modal">
+  <div class="modal-layer"></div>
+  <div
+    [ngClass]="modalAnimationClass()"
+    class="modal-content animate__animated"
+  >
+    <div class="modal-header">
+      <h5>settings</h5>
+      <button (click)="toggleModal()">
+        <i class="icon-close"></i>
+      </button>
+    </div>
+    <hr />
+    <div class="modal-timing">
+      <h5>time (minutes)</h5>
+      <div class="timing">
+        <div class="input-group">
+          <span>pomodoro</span>
+          <input
+            aria-label="time to pomodoro"
+            type="number"
+            name="pomodoro"
+            id="pomodoro"
+          />
+        </div>
+        <div class="input-group">
+          <span>short break</span>
+          <input
+            aria-label="short break"
+            type="number"
+            name="short"
+            id="short"
+          />
+        </div>
+        <div class="input-group">
+          <span>long break</span>
+          <input aria-label="long break" type="number" name="long" id="long" />
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="modal-font">
+      <h5>font</h5>
+      <div class="fonts">
+        <div class="font-group">
+          <label for="kumbh"></label>
+          <input type="radio" name="font" id="kumbh" />
+        </div>
+        <div class="font-group">
+          <label for="roboto"></label>
+          <input type="radio" name="font" id="roboto" />
+        </div>
+        <div class="font-group">
+          <label for="mono"></label>
+          <input type="radio" name="font" id="mono" />
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="modal-colors">
+      <h5>colors</h5>
+      <div class="colors">
+        <div class="color-group">
+          <label for="red"></label>
+          <input type="radio" name="color" id="red" />
+        </div>
+        <div class="color-group">
+          <label for="cyan"></label>
+          <input type="radio" name="color" id="cyan" />
+        </div>
+        <div class="color-group">
+          <label for="violet"></label>
+          <input type="radio" name="color" id="violet" />
+        </div>
+      </div>
+    </div>
+    <button (click)="toggleSave()" class="modal-btn">apply</button>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IConfig, ITimingConfig } from '@core/models/pomodoro.interface';
 import { PomodoroService } from '@core/services/pomodoro.service';
+import { ModalService } from './core/services/modal.service';
 
 interface IConfigApp {
   config: {
@@ -17,6 +18,12 @@ interface IConfigApp {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  constructor(private modalService: ModalService) {}
+
+  toggleModal() {
+    this.modalService.toggleModal();
+  }
+
   // fontList: IConfig[] = [
   //   { name: 'kumbh', value: 'kumbh-sans' },
   //   { name: 'roboto', value: 'roboto-slab' },

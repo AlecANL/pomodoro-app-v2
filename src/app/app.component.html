@@ -55,9 +55,10 @@
       <h1 class="main-title">pomodoro</h1>
       <nav-menu></nav-menu>
       <timer-button> </timer-button>
-      <button class="config-btn">
+      <button (click)="toggleModal()" class="config-btn">
         <img src="/assets/screw.svg" alt="screw icon" />
       </button>
     </div>
   </div>
+  <modal></modal>
 </div>
