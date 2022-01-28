@@ -9,6 +9,9 @@
   background: rgba(10, 12, 28, 0.5);
   backdrop-filter: blur(10px);
 }
+hr {
+  color: #dbdbdb;
+}
 
 .modal-content {
   @apply bg-white
@@ -149,8 +152,13 @@
   items-center
   justify-between;
 }
-
+.modal-colors {
+  @apply pt-4;
+}
 .fonts,
 .colors {
   @apply md:gap-4;
+}
+.modal label.active {
+  @apply bg-magenta;
 }

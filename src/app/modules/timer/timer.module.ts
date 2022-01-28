@@ -5,6 +5,7 @@ import { TimerButtonComponent } from './components/timer-button/timer-button.com
 import { ProgressComponent } from './components/progress/progress.component';
 import { SvgComponent } from './components/progress/svg.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,6 @@ import { ModalComponent } from './components/modal/modal.component';
     SvgComponent,
     ModalComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class TimerModule {}

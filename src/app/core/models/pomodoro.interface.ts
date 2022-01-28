@@ -7,15 +7,22 @@ export interface IPomodoro {
   };
 }
 
+export interface IConfigService {
+  fonts: IConfig[];
+  colors: IConfig[];
+  timings: ITimingConfig[];
+}
+
 export interface IDefault {
   color: IConfig;
   font: IConfig;
-  timing: ITimingConfig[];
+  timing: ITimingConfig;
 }
 
 export interface ITimingConfig {
   name: string;
   value: number;
+  longName: string;
 }
 
 export interface IConfig {

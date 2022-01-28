@@ -1,7 +1,8 @@
 <section *ngIf="isShowModal" class="modal">
   <div class="modal-layer"></div>
-  <div
+  <form
     [ngClass]="modalAnimationClass()"
+    [formGroup]="modalForm"
     class="modal-content animate__animated"
   >
     <div class="modal-header">
@@ -19,6 +20,7 @@
           <input
             aria-label="time to pomodoro"
             type="number"
+            formControlName="pomodoro"
             name="pomodoro"
             id="pomodoro"
           />
@@ -29,12 +31,19 @@
             aria-label="short break"
             type="number"
             name="short"
+            formControlName="shortBreak"
             id="short"
           />
         </div>
         <div class="input-group">
           <span>long break</span>
-          <input aria-label="long break" type="number" name="long" id="long" />
+          <input
+            formControlName="longBreak"
+            aria-label="long break"
+            type="number"
+            name="long"
+            id="long"
+          />
         </div>
       </div>
     </div>
@@ -43,16 +52,37 @@
       <h5>font</h5>
       <div class="fonts">
         <div class="font-group">
-          <label for="kumbh"></label>
-          <input type="radio" name="font" id="kumbh" />
+          <label [class.active]="getClass('font', 'kumbh')" for="kumbh"></label>
+          <input
+            value="kumbh"
+            formControlName="font"
+            type="radio"
+            name="font"
+            id="kumbh"
+          />
         </div>
         <div class="font-group">
-          <label for="roboto"></label>
-          <input type="radio" name="font" id="roboto" />
+          <label
+            [class.active]="getClass('font', 'roboto')"
+            for="roboto"
+          ></label>
+          <input
+            value="roboto"
+            formControlName="font"
+            type="radio"
+            name="font"
+            id="roboto"
+          />
         </div>
         <div class="font-group">
-          <label for="mono"></label>
-          <input type="radio" name="font" id="mono" />
+          <label [class.active]="getClass('font', 'mono')" for="mono"></label>
+          <input
+            value="mono"
+            formControlName="font"
+            type="radio"
+            name="font"
+            id="mono"
+          />
         </div>
       </div>
     </div>
@@ -61,19 +91,41 @@
       <h5>colors</h5>
       <div class="colors">
         <div class="color-group">
-          <label for="red"></label>
-          <input type="radio" name="color" id="red" />
+          <label [class.active]="getClass('color', 'red')" for="red"></label>
+          <input
+            value="red"
+            formControlName="color"
+            type="radio"
+            name="color"
+            id="red"
+          />
         </div>
         <div class="color-group">
-          <label for="cyan"></label>
-          <input type="radio" name="color" id="cyan" />
+          <label [class.active]="getClass('color', 'cyan')" for="cyan"></label>
+          <input
+            v-loading="cyan"
+            formControlName="color"
+            type="radio"
+            value="cyan"
+            name="color"
+            id="cyan"
+          />
         </div>
         <div class="color-group">
-          <label for="violet"></label>
-          <input type="radio" name="color" id="violet" />
+          <label
+            [class.active]="getClass('color', 'violet')"
+            for="violet"
+          ></label>
+          <input
+            formControlName="color"
+            type="radio"
+            name="color"
+            id="violet"
+            value="violet"
+          />
         </div>
       </div>
     </div>
     <button (click)="toggleSave()" class="modal-btn">apply</button>
-  </div>
+  </form>
 </section>
