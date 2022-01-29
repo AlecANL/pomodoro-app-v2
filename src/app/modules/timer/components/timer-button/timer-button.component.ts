@@ -50,6 +50,10 @@ export class TimerButtonComponent
     this.interval.unsubscribe();
   }
 
+  get currentTimer() {
+    return this.pomodoroService.currentTiming.value;
+  }
+
   /**
    * Change isStart$  Observable state to
    * define if start timer or if stopped

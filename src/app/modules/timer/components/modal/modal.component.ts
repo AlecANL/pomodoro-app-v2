@@ -1,15 +1,16 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 import { PomodoroService } from '@core/services/pomodoro.service';
 import { ConfigService } from '@core/services/config.service';
 import { ModalService } from '@core/services/modal.service';
+import { SaveStorage } from '@core/services/save-storage.service';
 
 import { ITimingConfig } from '@core/models/pomodoro.interface';
 import { IDefault } from '@core/models/pomodoro.interface';
+
 import { environment } from 'src/environments/environment';
-import { SaveStorage } from '@core/services/save-storage.service';
-import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'modal',
