@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { IDefault, IPomodoro } from '@core/models/pomodoro.interface';
-import { IConfig } from '@core/models/pomodoro.interface';
 import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 import { ITimingConfig, IShortConfig } from '../models/pomodoro.interface';
+import { SaveStorage } from './save-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,7 @@ export class PomodoroService {
   timing$: Observable<ITimingConfig> = this.timingCurrent$.asObservable();
   isStart$: Observable<boolean> = this.isStartTiming$.asObservable();
 
-  private _storageKey = 'pomodoro_v1';
+  private _storageKey = environment.pomodoroServiceStorageKey;
   private _state: IPomodoro = {
     currentConfig: {
       color: {
@@ -33,10 +35,24 @@ export class PomodoroService {
       },
     },
   };
-  private _localeState: IDefault = { ...this._state.currentConfig };
+
+  constructor(private saveStorage: SaveStorage) {
+    this.getInitialConfig();
+  }
 
   get currentTiming() {
     return this._state.currentConfig.timing;
+  }
+
+  get color() {
+    return this._state.currentConfig.color;
+  }
+  get font() {
+    return this._state.currentConfig.font;
+  }
+
+  get currentConfig() {
+    return this._state.currentConfig;
   }
 
   /**
@@ -70,62 +86,26 @@ export class PomodoroService {
     this._state.currentConfig.font = { ...font };
   }
 
-  // get isStartTiming(): Observable<boolean> {
-  //   return this.isStartTiming$.asObservable();
-  // }
-
-  // get observableTiming(): Observable<ITimingConfig> {
-  //   return this.timingCurrent$.asObservable();
-  // }
-
-  constructor() {
-    this.handleGetInitialConfig();
-  }
-
-  // get config() {
-  //   return this._state.config;
-  // }
-
-  get color() {
-    return this._state.currentConfig.color;
-  }
-  get font() {
-    return this._state.currentConfig.font;
-  }
-
-  get currentConfig() {
-    return this._state.currentConfig;
-  }
-
   handleSaveStorage(key: string, data: IDefault | string | ITimingConfig[]) {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  handleGetToStorage<T = any>(key: string): T | null {
-    if (!localStorage.getItem(key)) {
-      console.warn(
-        `whoops cannot find anything in localeStorage with key:${key}`
-      );
-      return null;
-    }
-    return JSON.parse(localStorage.getItem(key) as string);
-  }
+  getInitialConfig() {
+    const config = this.saveStorage.onGeToStorage<IDefault | null>(
+      this._storageKey
+    );
 
-  handleGetInitialConfig() {
-    const config = this.handleGetToStorage<IDefault>(this._storageKey);
     if (!config) {
-      this.handleSaveStorage(this._storageKey, this._state.currentConfig);
+      this.saveStorage.onSaveStorage<IDefault>(
+        this._storageKey,
+        this._state.currentConfig
+      );
       return;
     }
+
     this._state = {
-      ...this._state.currentConfig,
+      ...this._state,
       currentConfig: { ...config },
     };
-    return;
   }
-
-  // handleConfigChange(config: IDefault) {
-  //   this._state = { ...this._state, currentConfig: { ...config } };
-  //   this.handleSaveStorage(this._storageKey, this.currentConfig);
-  // }
 }

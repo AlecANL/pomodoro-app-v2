@@ -1,17 +1,19 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ModalService } from '@core/services/modal.service';
-import { IConfig, ITimingConfig } from '@core/models/pomodoro.interface';
-import { PomodoroService } from '@core/services/pomodoro.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
+import { PomodoroService } from '@core/services/pomodoro.service';
 import { ConfigService } from '@core/services/config.service';
-import { IDefault } from '../../../../core/models/pomodoro.interface';
+import { ModalService } from '@core/services/modal.service';
+
+import { ITimingConfig } from '@core/models/pomodoro.interface';
+import { IDefault } from '@core/models/pomodoro.interface';
 
 @Component({
   selector: 'modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
-export class ModalComponent implements OnInit, OnDestroy {
+export class ModalComponent implements OnInit {
   modalForm: FormGroup = this.fb.group({
     pomodoro: [25],
     shortBreak: [5],
@@ -55,8 +57,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     const color = this.modalForm.get('color')?.setValue(config.color.value);
     const font = this.modalForm.get('font')?.setValue(config.font.value);
   }
-
-  ngOnDestroy(): void {}
 
   get isShowModal() {
     return this.modalService.isShowModal;

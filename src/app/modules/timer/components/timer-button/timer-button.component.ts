@@ -20,9 +20,8 @@ import { ConfigService } from '@core/services/config.service';
 export class TimerButtonComponent
   implements OnInit, OnDestroy, AfterViewChecked
 {
-  time: number = this.pomodoroService.currentTiming.value * 60;
+  timeInInterval: number = this.pomodoroService.currentTiming.value * 60;
   isTogglePlay: boolean = false;
-  timing!: ReturnType<typeof setInterval>;
   interval!: Subscription;
   @ViewChild('progress') progressTimer!: ElementRef<SVGCircleElement>;
 
@@ -71,13 +70,13 @@ export class TimerButtonComponent
    */
   handleTimingConfigObservable() {
     this.pomodoroService.timing$.subscribe((timingConfig) => {
-      this.time = timingConfig.value * 60;
+      this.timeInInterval = timingConfig.value * 60;
     });
   }
 
   handleCurrentTimer() {
     /**
-     * TODO: fix this feature, every time to change a value in modal
+     * TODO: this feature, every time to change a value in modal
      * in every tab always start in pomodoro tab.
      */
     this.configService.timing$.subscribe((data) => {
@@ -95,7 +94,7 @@ export class TimerButtonComponent
     element.style.strokeDasharray = `${circumference} ${circumference}`;
     element.style.strokeDashoffset = `${0}`;
 
-    const percent = (this.time / (currentTimer * 60)) * 100;
+    const percent = (this.timeInInterval / (currentTimer * 60)) * 100;
     const offset = circumference - (percent / 100) * circumference;
     element.style.strokeDashoffset = `${offset}`;
   }
@@ -110,8 +109,8 @@ export class TimerButtonComponent
 
   handleStartTimer() {
     this.interval = interval(1000).subscribe((n) => {
-      this.time -= 1;
-      if (this.time <= 0) {
+      this.timeInInterval -= 1;
+      if (this.timeInInterval <= 0) {
         /**
          * if time end and goes 0 first one
          * change isStart Timer to false and stopped

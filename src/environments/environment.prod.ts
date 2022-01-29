@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  pomodoroServiceStorageKey: 'pomodoro_v1',
+  configStorageServiceKey: 'timing_list_v1',
 };
