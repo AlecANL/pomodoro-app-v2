@@ -97,7 +97,7 @@ export class PomodoroService {
     return this._state.currentConfig;
   }
 
-  handleSaveStorage(key: string, data: IDefault | string) {
+  handleSaveStorage(key: string, data: IDefault | string | ITimingConfig[]) {
     localStorage.setItem(key, JSON.stringify(data));
   }
 

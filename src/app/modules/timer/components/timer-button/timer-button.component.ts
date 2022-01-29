@@ -1,6 +1,5 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -8,20 +7,23 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { Subscription } from 'rxjs';
+import { interval } from 'rxjs';
+
 import { PomodoroService } from '@core/services/pomodoro.service';
 import { ConfigService } from '@core/services/config.service';
-import { ITimingConfig } from '@core/models/pomodoro.interface';
 @Component({
   selector: 'timer-button',
   templateUrl: './timer-button.component.html',
   styleUrls: ['./timer-button.component.css'],
 })
 export class TimerButtonComponent
-  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked
+  implements OnInit, OnDestroy, AfterViewChecked
 {
   time: number = this.pomodoroService.currentTiming.value * 60;
   isTogglePlay: boolean = false;
   timing!: ReturnType<typeof setInterval>;
+  interval!: Subscription;
   @ViewChild('progress') progressTimer!: ElementRef<SVGCircleElement>;
 
   constructor(
@@ -39,44 +41,29 @@ export class TimerButtonComponent
     this.handleIsStartObservable();
     this.handleTimingConfigObservable();
     this.handleCurrentTimer();
-
-    if (this.progressTimer) {
-      console.log(this.progressTimer.nativeElement);
-    }
   }
 
   ngAfterViewChecked(): void {
     this.handleProgress();
   }
 
-  ngAfterViewInit(): void {
-    // this.handleProgress();
-  }
-  // get time() {
-  //   return this.pomodoroService.currentTiming.value * 60
-  // }
-
-  handleProgress() {
-    const element = this.progressTimer.nativeElement;
-    const radius = element.getAttribute('r');
-    console.log(radius);
-    const circumference = Number(radius) * 2 * Math.PI;
-    const currentTimer = this.pomodoroService.currentTiming.value;
-    element.style.strokeDasharray = `${circumference} ${circumference}`;
-    element.style.strokeDashoffset = `${0}`;
-
-    const percent = (this.time / (currentTimer * 60)) * 100;
-    const offset = circumference - (percent / 100) * circumference;
-    console.log('>>> percent: ', percent);
-    console.log('>>> offset: ', offset);
-    console.log('>>> time', currentTimer);
-    console.log('>>> timeInterval', this.time);
-    element.style.strokeDashoffset = `${offset}`;
+  ngOnDestroy(): void {
+    this.interval.unsubscribe();
   }
 
   /**
+   * Change isStart$  Observable state to
+   * define if start timer or if stopped
+   */
+  handleIsStartObservable() {
+    this.pomodoroService.isStart$.subscribe((isStart) => {
+      this.isTogglePlay = isStart;
+      this.isTogglePlay ? this.handleStartTimer() : this.handlePauseTimer();
+    });
+  }
+  /**
    * Change current timing
-   * should have 3 differences states
+   * must have 3 differences states
    * 1 Pomodoro
    * 2 short break
    * 3 Long break
@@ -84,62 +71,67 @@ export class TimerButtonComponent
    */
   handleTimingConfigObservable() {
     this.pomodoroService.timing$.subscribe((timingConfig) => {
-      console.log(`>> timingConfig observable>>>`, timingConfig);
       this.time = timingConfig.value * 60;
     });
   }
 
-  /**
-   * Change isStart$  Observable state to
-   * define if start timer or stopped
-   */
-  handleIsStartObservable() {
-    this.pomodoroService.isStart$.subscribe((isStart) => {
-      this.isTogglePlay = isStart;
-      this.isTogglePlay ? this.handleTiming() : this.pauseTimer();
-    });
-  }
-
   handleCurrentTimer() {
+    /**
+     * TODO: fix this feature, every time to change a value in modal
+     * in every tab always start in pomodoro tab.
+     */
     this.configService.timing$.subscribe((data) => {
       this.pomodoroService.setCurrentTiming$(data[0]);
     });
   }
 
-  /**
-   * use @Function from @Service PomodoroService,
-   * to change state that observable
-   */
-  toggle() {
-    this.pomodoroService.toggleTiming$(!this.isTogglePlay);
+  // Handle ProgressBar SVG, to give feedback about
+  // how time in timer
+  handleProgress() {
+    const element = this.progressTimer.nativeElement;
+    const radius = element.getAttribute('r');
+    const circumference = Number(radius) * 2 * Math.PI;
+    const currentTimer = this.pomodoroService.currentTiming.value;
+    element.style.strokeDasharray = `${circumference} ${circumference}`;
+    element.style.strokeDashoffset = `${0}`;
+
+    const percent = (this.time / (currentTimer * 60)) * 100;
+    const offset = circumference - (percent / 100) * circumference;
+    element.style.strokeDashoffset = `${offset}`;
   }
-  /**
-   * Manage timer countdown the timer
-   */
-  handleTiming() {
-    this.timing = setInterval(() => {
+
+  /*  >>>>>> Timer Pomodoro Handle <<<<<<<<  */
+
+  handlePauseTimer() {
+    if (this.interval) {
+      this.interval.unsubscribe();
+    }
+  }
+
+  handleStartTimer() {
+    this.interval = interval(1000).subscribe((n) => {
       this.time -= 1;
       if (this.time <= 0) {
-        // Paused Timer, and restart to initial values
+        /**
+         * if time end and goes 0 first one
+         * change isStart Timer to false and stopped
+         * */
         this.pomodoroService.toggleTiming$(false);
+        /**
+         * second one take value in currentTiming
+         * and restart Timer with that value
+         */
         this.pomodoroService.setCurrentTiming$(
           this.pomodoroService.currentTiming
         );
       }
-    }, 1000);
+    });
   }
-
-  present(value: number) {
-    return `${('0' + Math.floor(value / 60)).slice(-2)}:${(
-      '0' + Math.floor(value % 60)
-    ).slice(-2)}`;
-  }
-
-  pauseTimer() {
-    clearInterval(this.timing);
-  }
-
-  ngOnDestroy(): void {
-    clearInterval(this.timing);
+  /**
+   * use @Function from @Service PomodoroService,
+   * to change state that observable
+   */
+  toggleIsStartTimer() {
+    this.pomodoroService.toggleTiming$(!this.isTogglePlay);
   }
 }

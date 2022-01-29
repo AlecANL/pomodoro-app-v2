@@ -4,6 +4,7 @@ import { IConfig, ITimingConfig } from '@core/models/pomodoro.interface';
 import { PomodoroService } from '@core/services/pomodoro.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfigService } from '@core/services/config.service';
+import { IDefault } from '../../../../core/models/pomodoro.interface';
 
 @Component({
   selector: 'modal',
@@ -11,23 +12,48 @@ import { ConfigService } from '@core/services/config.service';
   styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  modalForm!: FormGroup;
+  modalForm: FormGroup = this.fb.group({
+    pomodoro: [25],
+    shortBreak: [5],
+    longBreak: [15],
+    color: ['radical-red'],
+    font: ['kumbh-sans'],
+  });
 
   constructor(
     private modalService: ModalService,
     private pomodoroService: PomodoroService,
     private configService: ConfigService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.onSome();
+    this.onSaveColorAndFont();
+  }
 
-  ngOnInit(): void {
-    this.modalForm = this.fb.group({
-      pomodoro: [25],
-      shortBreak: [5],
-      longBreak: [15],
-      color: ['radical-red'],
-      font: ['kumbh-sans'],
+  ngOnInit(): void {}
+
+  onSome() {
+    if (!localStorage.getItem('timing_list_v1')) {
+      return;
+    }
+    const data: ITimingConfig[] = JSON.parse(
+      localStorage.getItem('timing_list_v1') as string
+    );
+
+    data.forEach((x) => {
+      this.modalForm.get(x.longName)?.setValue(x.value);
     });
+  }
+
+  onSaveColorAndFont() {
+    if (!localStorage.getItem('pomodoro_v1')) {
+      return;
+    }
+    const config: IDefault = JSON.parse(
+      localStorage.getItem('pomodoro_v1') as string
+    );
+    const color = this.modalForm.get('color')?.setValue(config.color.value);
+    const font = this.modalForm.get('font')?.setValue(config.font.value);
   }
 
   ngOnDestroy(): void {}
@@ -90,7 +116,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   toggleSave() {
-    console.log(this.modalForm.value);
     this.onSaveTimings();
     this.onSaveColor();
     this.onSaveFont();
