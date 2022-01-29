@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IDefault, IPomodoro } from '@core/models/pomodoro.interface';
 import { IConfig } from '@core/models/pomodoro.interface';
 import { Observable, Subject } from 'rxjs';
-import { ITimingConfig } from '../models/pomodoro.interface';
+import { ITimingConfig, IShortConfig } from '../models/pomodoro.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +21,9 @@ export class PomodoroService {
   private _state: IPomodoro = {
     currentConfig: {
       color: {
-        name: 'red',
         value: 'radical-red',
       },
       font: {
-        name: 'kumbh',
         value: 'kumbh-sans',
       },
       timing: {
@@ -34,36 +32,11 @@ export class PomodoroService {
         value: 25,
       },
     },
-    config: {
-      colors: [],
-      fonts: [],
-      timing: [
-        {
-          name: 'pomodoro',
-          longName: 'pomodoro',
-          value: 25,
-        },
-        {
-          name: 'short break',
-          longName: 'shortBreak',
-          value: 5,
-        },
-        {
-          name: 'long break',
-          longName: 'longBreak',
-          value: 15,
-        },
-      ],
-    },
   };
   private _localeState: IDefault = { ...this._state.currentConfig };
 
   get currentTiming() {
     return this._state.currentConfig.timing;
-  }
-
-  get configTimingList() {
-    return [...this._state.config.timing];
   }
 
   /**
@@ -89,9 +62,12 @@ export class PomodoroService {
     this.isStartTiming$.next(isStart);
   }
 
-  setLocaleState(config: IConfig, prop: string) {
-    const x: any = this._localeState;
-    x[prop] = config;
+  setCurrentColor(color: IShortConfig) {
+    this._state.currentConfig.color = { ...color };
+  }
+
+  setCurrentFont(font: IShortConfig) {
+    this._state.currentConfig.font = { ...font };
   }
 
   // get isStartTiming(): Observable<boolean> {
@@ -102,48 +78,51 @@ export class PomodoroService {
   //   return this.timingCurrent$.asObservable();
   // }
 
-  // constructor() {
-  //   // this.handleGetInitialConfig();
-  // }
+  constructor() {
+    this.handleGetInitialConfig();
+  }
 
   // get config() {
   //   return this._state.config;
   // }
 
-  // get color() {
-  //   return this._state.currentConfig.color;
-  // }
-  // get font() {
-  //   return this._state.currentConfig.font;
-  // }
+  get color() {
+    return this._state.currentConfig.color;
+  }
+  get font() {
+    return this._state.currentConfig.font;
+  }
 
-  // get currentConfig() {
-  //   return this._state.currentConfig;
-  // }
+  get currentConfig() {
+    return this._state.currentConfig;
+  }
 
-  // handleSaveStorage(key: string, data: IDefault | string) {
-  //   localStorage.setItem(key, JSON.stringify(data));
-  // }
+  handleSaveStorage(key: string, data: IDefault | string) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 
-  // handleGetToStorage<T = any>(key: string): T | null {
-  //   if (!localStorage.getItem(key)) {
-  //     console.warn(
-  //       `whoops cannot find anything in localeStorage with key:${key}`
-  //     );
-  //     return null;
-  //   }
-  //   return JSON.parse(localStorage.getItem(key) as string);
-  // }
+  handleGetToStorage<T = any>(key: string): T | null {
+    if (!localStorage.getItem(key)) {
+      console.warn(
+        `whoops cannot find anything in localeStorage with key:${key}`
+      );
+      return null;
+    }
+    return JSON.parse(localStorage.getItem(key) as string);
+  }
 
-  // handleGetInitialConfig() {
-  //   const config = this.handleGetToStorage<IDefault>(this._storageKey);
-  //   if (!config) {
-  //     this.handleSaveStorage(this._storageKey, this.currentConfig);
-  //     return;
-  //   }
-  //   this._state = { ...this._state, currentConfig: { ...config } };
-  //   return;
-  // }
+  handleGetInitialConfig() {
+    const config = this.handleGetToStorage<IDefault>(this._storageKey);
+    if (!config) {
+      this.handleSaveStorage(this._storageKey, this._state.currentConfig);
+      return;
+    }
+    this._state = {
+      ...this._state.currentConfig,
+      currentConfig: { ...config },
+    };
+    return;
+  }
 
   // handleConfigChange(config: IDefault) {
   //   this._state = { ...this._state, currentConfig: { ...config } };

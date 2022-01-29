@@ -1,10 +1,5 @@
 export interface IPomodoro {
   currentConfig: IDefault;
-  config: {
-    fonts: IConfig[];
-    colors: IConfig[];
-    timing: ITimingConfig[];
-  };
 }
 
 export interface IConfigService {
@@ -14,8 +9,8 @@ export interface IConfigService {
 }
 
 export interface IDefault {
-  color: IConfig;
-  font: IConfig;
+  color: IShortConfig;
+  font: IShortConfig;
   timing: ITimingConfig;
 }
 
@@ -23,6 +18,10 @@ export interface ITimingConfig {
   name: string;
   value: number;
   longName: string;
+}
+
+export interface IShortConfig {
+  value: string;
 }
 
 export interface IConfig {

@@ -1,4 +1,4 @@
-<section *ngIf="isShowModal" class="modal">
+<section *ngIf="isShowModal" [ngClass]="getModalClass()">
   <div class="modal-layer"></div>
   <form
     [ngClass]="modalAnimationClass()"
@@ -51,37 +51,15 @@
     <div class="modal-font">
       <h5>font</h5>
       <div class="fonts">
-        <div class="font-group">
-          <label [class.active]="getClass('font', 'kumbh')" for="kumbh"></label>
+        <div class="font-group" *ngFor="let font of fontList">
+          <label [ngClass]="getClass('font', font.value)" [for]="font.name">
+            <span>Aa</span>
+          </label>
           <input
-            value="kumbh"
+            [value]="font.value"
             formControlName="font"
             type="radio"
-            name="font"
-            id="kumbh"
-          />
-        </div>
-        <div class="font-group">
-          <label
-            [class.active]="getClass('font', 'roboto')"
-            for="roboto"
-          ></label>
-          <input
-            value="roboto"
-            formControlName="font"
-            type="radio"
-            name="font"
-            id="roboto"
-          />
-        </div>
-        <div class="font-group">
-          <label [class.active]="getClass('font', 'mono')" for="mono"></label>
-          <input
-            value="mono"
-            formControlName="font"
-            type="radio"
-            name="font"
-            id="mono"
+            [id]="font.name"
           />
         </div>
       </div>
@@ -90,42 +68,20 @@
     <div class="modal-colors">
       <h5>colors</h5>
       <div class="colors">
-        <div class="color-group">
-          <label [class.active]="getClass('color', 'red')" for="red"></label>
-          <input
-            value="red"
-            formControlName="color"
-            type="radio"
-            name="color"
-            id="red"
-          />
-        </div>
-        <div class="color-group">
-          <label [class.active]="getClass('color', 'cyan')" for="cyan"></label>
-          <input
-            v-loading="cyan"
-            formControlName="color"
-            type="radio"
-            value="cyan"
-            name="color"
-            id="cyan"
-          />
-        </div>
-        <div class="color-group">
+        <div *ngFor="let color of colorList" class="color-group">
           <label
-            [class.active]="getClass('color', 'violet')"
-            for="violet"
+            [ngClass]="getClass('color', color.value)"
+            [for]="color.name"
           ></label>
           <input
+            [value]="color.value"
             formControlName="color"
             type="radio"
-            name="color"
-            id="violet"
-            value="violet"
+            [id]="color.name"
           />
         </div>
       </div>
     </div>
-    <button (click)="toggleSave()" class="modal-btn">apply</button>
+    <button (click)="toggleSave()" [ngClass]="getButtonClass()">apply</button>
   </form>
 </section>

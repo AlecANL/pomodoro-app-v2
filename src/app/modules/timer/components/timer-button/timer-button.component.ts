@@ -1,17 +1,33 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 
 import { PomodoroService } from '@core/services/pomodoro.service';
+import { ConfigService } from '@core/services/config.service';
+import { ITimingConfig } from '@core/models/pomodoro.interface';
 @Component({
   selector: 'timer-button',
   templateUrl: './timer-button.component.html',
   styleUrls: ['./timer-button.component.css'],
 })
-export class TimerButtonComponent implements OnInit, OnDestroy {
-  time: number = 25 * 60;
+export class TimerButtonComponent
+  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked
+{
+  time: number = this.pomodoroService.currentTiming.value * 60;
   isTogglePlay: boolean = false;
   timing!: ReturnType<typeof setInterval>;
+  @ViewChild('progress') progressTimer!: ElementRef<SVGCircleElement>;
 
-  constructor(private pomodoroService: PomodoroService) {}
+  constructor(
+    private pomodoroService: PomodoroService,
+    private configService: ConfigService
+  ) {}
 
   ngOnInit(): void {
     /**
@@ -22,6 +38,40 @@ export class TimerButtonComponent implements OnInit, OnDestroy {
      */
     this.handleIsStartObservable();
     this.handleTimingConfigObservable();
+    this.handleCurrentTimer();
+
+    if (this.progressTimer) {
+      console.log(this.progressTimer.nativeElement);
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    this.handleProgress();
+  }
+
+  ngAfterViewInit(): void {
+    // this.handleProgress();
+  }
+  // get time() {
+  //   return this.pomodoroService.currentTiming.value * 60
+  // }
+
+  handleProgress() {
+    const element = this.progressTimer.nativeElement;
+    const radius = element.getAttribute('r');
+    console.log(radius);
+    const circumference = Number(radius) * 2 * Math.PI;
+    const currentTimer = this.pomodoroService.currentTiming.value;
+    element.style.strokeDasharray = `${circumference} ${circumference}`;
+    element.style.strokeDashoffset = `${0}`;
+
+    const percent = (this.time / (currentTimer * 60)) * 100;
+    const offset = circumference - (percent / 100) * circumference;
+    console.log('>>> percent: ', percent);
+    console.log('>>> offset: ', offset);
+    console.log('>>> time', currentTimer);
+    console.log('>>> timeInterval', this.time);
+    element.style.strokeDashoffset = `${offset}`;
   }
 
   /**
@@ -34,6 +84,7 @@ export class TimerButtonComponent implements OnInit, OnDestroy {
    */
   handleTimingConfigObservable() {
     this.pomodoroService.timing$.subscribe((timingConfig) => {
+      console.log(`>> timingConfig observable>>>`, timingConfig);
       this.time = timingConfig.value * 60;
     });
   }
@@ -46,6 +97,12 @@ export class TimerButtonComponent implements OnInit, OnDestroy {
     this.pomodoroService.isStart$.subscribe((isStart) => {
       this.isTogglePlay = isStart;
       this.isTogglePlay ? this.handleTiming() : this.pauseTimer();
+    });
+  }
+
+  handleCurrentTimer() {
+    this.configService.timing$.subscribe((data) => {
+      this.pomodoroService.setCurrentTiming$(data[0]);
     });
   }
 

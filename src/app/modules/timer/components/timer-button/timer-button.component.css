@@ -50,3 +50,14 @@
   tracking-[1.0625rem];
   margin-inline-end: -20px;
 }
+
+circle {
+  @apply origin-center
+  -rotate-90
+  transform
+  transition-all;
+}
+
+svg {
+  @apply transition-all;
+}

@@ -2,7 +2,7 @@
   <ul class="nav-list">
     <li
       class="nav-list__item"
-      *ngFor="let option of menuOptions"
+      *ngFor="let option of timings"
       (click)="handleTabChange(option)"
       [class.active]="activeTab === option.longName"
     >

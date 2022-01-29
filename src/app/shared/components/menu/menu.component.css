@@ -5,7 +5,7 @@
   rounded-full
   max-w-[20.625rem]
   sm:px-2
-  sm:max-w-[23.4375rem];
+  sm:max-w-[24rem];
 }
 
 .nav-list {
@@ -24,9 +24,4 @@
   xs:px-5
   sm:px-6
   md:text-sm;
-}
-
-.nav-list__item.active {
-  @apply bg-radical-red
-  text-violet;
 }

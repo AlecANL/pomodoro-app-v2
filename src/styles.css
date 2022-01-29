@@ -46,3 +46,28 @@ body {
 .mono-space {
   @apply font-space-mono;
 }
+
+.radical-red .nav-list__item.active {
+  @apply bg-radical-red
+  text-violet;
+}
+
+.magenta .nav-list__item.active {
+  @apply bg-magenta text-violet;
+}
+
+.cyan .nav-list__item.active {
+  @apply bg-cyan text-violet;
+}
+
+.radical-red circle {
+  @apply stroke-radical-red;
+}
+
+.magenta circle {
+  @apply stroke-magenta;
+}
+
+.cyan circle {
+  @apply stroke-cyan;
+}

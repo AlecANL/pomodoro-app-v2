@@ -107,8 +107,7 @@ hr {
 
 .fonts label,
 .colors label {
-  @apply outline
-  block
+  @apply block
   rounded-full
   cursor-pointer
   w-10
@@ -160,5 +159,72 @@ hr {
   @apply md:gap-4;
 }
 .modal label.active {
+  @apply bg-violet;
+}
+
+.radical-red {
+  @apply bg-radical-red;
+}
+.cyan {
+  @apply bg-cyan;
+}
+
+.magenta {
   @apply bg-magenta;
+}
+
+.modal-font label {
+  @apply text-base
+  relative
+  bg-selago;
+  color: #5b5072;
+}
+
+.modal-font label span {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+}
+
+label.kumbh {
+  @apply font-kumbh-sans
+  font-bold;
+}
+label.mono {
+  @apply font-space-mono
+  font-normal;
+}
+label.roboto {
+  @apply font-roboto-slab
+  font-bold;
+}
+
+.modal-font label.active {
+  @apply bg-haiti
+  text-white;
+}
+
+.modal-font-kumbh-sans {
+  @apply font-kumbh-sans;
+}
+
+.modal-font-roboto-slab {
+  @apply font-roboto-slab;
+}
+
+.modal-font-mono-space {
+  @apply font-space-mono;
+}
+
+.button-color-cyan {
+  @apply bg-cyan;
+}
+
+.button-color-magenta {
+  @apply bg-magenta;
+}
+
+.button-color-radical-red {
+  @apply bg-radical-red;
 }
