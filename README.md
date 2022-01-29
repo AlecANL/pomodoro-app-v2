@@ -1,27 +1,43 @@
-# PomodoroAppV2
+## Welcome! 👋
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3.
+# Frontend Mentor - Pomodoro app
 
-## Development server
+This is a solution to the [GitHub user search app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/github-user-search-app-Q09YOgaH6). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Overview
 
-## Code scaffolding
+## The challenge
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Your challenge is to build out this Pomodoro timer app and get it looking as close to the design as possible.
 
-## Build
+You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Your users should be able to:
 
-## Running unit tests
+- Set a pomodoro timer and short & long break timers
+- Customize how long each timer runs for
+- See a circular progress bar that updates every minute and represents how far through their timer they are
+- Customize the appearance of the app with the ability to set preferences for colors and fonts
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Screenshot
 
-## Running end-to-end tests
+![demo](./src/assets/images/design.png)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Links
 
-## Further help
+- Solution URL: [repo](https://github.com/AlecANL/pomodoro-app-v2)
+- Live Site URL: [live demo](https://pomodoro-app-v2.netlify.app/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## My process
+
+### Built with
+
+- Semantic HTML5 markup
+- Mobile-first workflow
+- [Tailwind](https://tailwindcss.com/) - Tailwindcss
+
+## Author
+
+- Website - [portfolio](https://alec-portfolio-dev.vercel.app/)
+- Frontend Mentor - [@alecanl](https://www.frontendmentor.io/profile/alecanl)
+- Twitter - [@alecanl](https://www.twitter.com/alecanl)
