@@ -1,6 +1,12 @@
 .config-btn {
-  @apply absolute;
+  @apply absolute
+  text-base
+  flex
+  items-center
+  justify-center
+  gap-2;
   inset-inline-start: 50%;
+  transform: translateX(-50%);
   inset-block-end: -25%;
 }
 

@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
@@ -19,11 +21,7 @@ module.exports = {
       "2xl": "1536px",
       // => @media (min-width: 1536px) { ... }
     },
-    fontFamily: {
-      "kumbh-sans": ["Kumbh Sans", "sans-serif"],
-      "space-mono": ["Space Mono", "monospace"],
-      "roboto-slab": ["Roboto Slab", "serif"],
-    },
+
     colors: {
       moonraker: "#d7e0ff",
       magenta: "#d881f8",
@@ -37,7 +35,13 @@ module.exports = {
       topaz: "#7a748c",
       "santas-grey": "#a7a2b2",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        "kumbh-sans": ["Kumbh Sans", "sans-serif"],
+        "space-mono": ["Zen Kurenaido", "sans-serif"],
+        "roboto-slab": ["Roboto Slab", "serif"],
+      },
+    },
   },
   plugins: [],
 };

@@ -39,12 +39,13 @@ body {
   @apply font-kumbh-sans;
 }
 
-.violet h1 {
+.magenta h1 {
   @apply text-magenta;
 }
 
-.mono-space {
+.space-mono {
   @apply font-space-mono;
+  font-size: 5px !important;
 }
 
 .radical-red .nav-list__item.active {

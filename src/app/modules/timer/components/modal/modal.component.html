@@ -1,7 +1,7 @@
-<section *ngIf="isShowModal" [ngClass]="getModalClass()">
+<section *ngIf="isShowModal" class="modal">
   <div class="modal-layer"></div>
   <form
-    [ngClass]="modalAnimationClass()"
+    [@modal-content]
     [formGroup]="modalForm"
     class="modal-content animate__animated"
   >
@@ -15,36 +15,31 @@
     <div class="modal-timing">
       <h5>time (minutes)</h5>
       <div class="timing">
-        <div class="input-group">
-          <span>pomodoro</span>
+        <div
+          [ngClass]="getErrorClass('input-error', timing.longName)"
+          *ngFor="let timing of timingList"
+          class="input-group"
+        >
+          <span> {{ timing.name }} </span>
           <input
             aria-label="time to pomodoro"
             type="number"
-            formControlName="pomodoro"
-            name="pomodoro"
-            id="pomodoro"
+            [formControlName]="timing.longName"
+            [id]="timing.longName"
           />
         </div>
-        <div class="input-group">
-          <span>short break</span>
-          <input
-            aria-label="short break"
-            type="number"
-            name="short"
-            formControlName="shortBreak"
-            id="short"
-          />
-        </div>
-        <div class="input-group">
-          <span>long break</span>
-          <input
-            formControlName="longBreak"
-            aria-label="long break"
-            type="number"
-            name="long"
-            id="long"
-          />
-        </div>
+      </div>
+      <div *ngIf="modalForm.invalid && modalForm.touched" class="message-error">
+        <p>
+          Whoops there an invalid value. Remember, each one timing should be in
+          minutes. Min valid value must be:
+        </p>
+        <ul>
+          <li>pomodoro: 25 min.</li>
+          <li>shortBreak: 5min</li>
+          <li>longBreak: 15mi.</li>
+        </ul>
+        <p>and max valid value each one must be 60 min.</p>
       </div>
     </div>
     <hr />
@@ -52,7 +47,11 @@
       <h5>font</h5>
       <div class="fonts">
         <div class="font-group" *ngFor="let font of fontList">
-          <label [ngClass]="getClass('font', font.value)" [for]="font.name">
+          <label
+            [attr.data-title]="font.name"
+            [ngClass]="getClass('font', font.value)"
+            [for]="font.name"
+          >
             <span>Aa</span>
           </label>
           <input
@@ -70,9 +69,12 @@
       <div class="colors">
         <div *ngFor="let color of colorList" class="color-group">
           <label
+            [attr.data-title]="color.name"
             [ngClass]="getClass('color', color.value)"
             [for]="color.name"
-          ></label>
+          >
+            <i class="icon-check"></i>
+          </label>
           <input
             [value]="color.value"
             formControlName="color"
@@ -82,6 +84,12 @@
         </div>
       </div>
     </div>
-    <button (click)="toggleSave()" [ngClass]="getButtonClass()">apply</button>
+    <button
+      [disabled]="modalForm.invalid"
+      (click)="toggleSave()"
+      [ngClass]="getButtonClass()"
+    >
+      apply
+    </button>
   </form>
 </section>

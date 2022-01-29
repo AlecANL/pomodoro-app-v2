@@ -20,8 +20,8 @@ hr {
   text-violet
   p-6
   max-w-[33.75rem]
-  /* overflow-scroll */
-  md:h-[470px]
+  md:max-h-[37.5rem]
+  lg:pb-10
   rounded-2xl;
 }
 
@@ -70,7 +70,7 @@ hr {
 .input-group {
   @apply flex
   items-center
-  justify-between
+  gap-2
   md:flex-col
   md:flex-1;
 }
@@ -83,18 +83,24 @@ hr {
 
 .input-group span {
   @apply mb-1
+  flex-1
+  text-center
   md:text-base;
 }
 
 .input-group input {
-  @apply bg-selago
+  @apply flex-1
+  bg-selago
   p-4
+  w-52
   text-haiti
   font-bold
   text-sm
   rounded-lg
   md:text-base
   md:w-full;
+  /*
+  */
 }
 
 .fonts,
@@ -131,6 +137,8 @@ hr {
   font-bold
   text-base
   capitalize
+  disabled:cursor-not-allowed
+  disabled:bg-santas-grey
   md:text-lg
   md:absolute
   md:w-36
@@ -158,8 +166,8 @@ hr {
 .colors {
   @apply md:gap-4;
 }
-.modal label.active {
-  @apply bg-violet;
+.modal label.active i {
+  @apply block;
 }
 
 .radical-red {
@@ -187,6 +195,25 @@ hr {
   transform: translate(-50%, -50%);
 }
 
+/* .modal-colors label {
+  @apply flex
+  items-center
+  justify-center;
+} */
+
+.modal-colors label i {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  /* display: none; */
+}
+
+.modal-colors label.active i {
+  opacity: 1;
+}
+
 label.kumbh {
   @apply font-kumbh-sans
   font-bold;
@@ -204,6 +231,17 @@ label.roboto {
   @apply bg-haiti
   text-white;
 }
+.message-error {
+  @apply text-sm py-2;
+  color: #ff8f8f;
+}
+.message-error ul {
+  @apply py-1;
+}
+
+.message-error ul li {
+  @apply font-bold;
+}
 
 .modal-font-kumbh-sans {
   @apply font-kumbh-sans;
@@ -213,6 +251,7 @@ label.roboto {
   @apply font-roboto-slab;
 }
 
+.modal-font-space-mono,
 .modal-font-mono-space {
   @apply font-space-mono;
 }
@@ -227,4 +266,68 @@ label.roboto {
 
 .button-color-radical-red {
   @apply bg-radical-red;
+}
+.modal-timing .input-error input {
+  color: #ff8f8f;
+  border: 1px solid #ff8f8f;
+}
+
+.modal-timing .input-error span {
+  color: #ff8f8f;
+}
+
+/*Tooltips*/
+.modal-content label {
+  @apply relative;
+}
+
+.modal-content label::before,
+.modal-content label::after {
+  @apply block
+  opacity-0
+  pointer-events-none
+  relative;
+}
+
+/* Triangule */
+.modal-content label::after {
+  border-inline-end: 6px solid transparent;
+  border-block-end: 6px solid rgba(0, 0, 0, 75);
+  border-inline-start: 6px solid transparent;
+  content: "";
+  inset-block-start: 5px;
+  inset-inline-start: 17px;
+  inline-size: 0;
+  block-size: 0;
+}
+
+.modal-content label::before {
+  @apply font-kumbh-sans
+text-base;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 6px;
+  color: #fff;
+  content: attr(data-title);
+
+  font-size: 14px;
+  padding: 6px 10px;
+  inline-size: 100px;
+  text-align: center;
+  inset-inline-start: -28px;
+  inset-block-start: 45px;
+  white-space: nowrap;
+}
+
+/* animation */
+.modal-content label::after,
+.modal-content label::before {
+  transform: translate3d(0, -10px, 0);
+  transition: all 0.15s ease-in-out;
+}
+
+.modal-content label:hover::after,
+.modal-content label:hover::before {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }

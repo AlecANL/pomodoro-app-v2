@@ -3,18 +3,20 @@ import { IConfigService } from '@core/models/pomodoro.interface';
 import { ITimingConfig } from '../models/pomodoro.interface';
 import { Subject, Observable } from 'rxjs';
 import { PomodoroService } from './pomodoro.service';
+import { SaveStorage } from './save-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
   private timings$: Subject<ITimingConfig[]> = new Subject();
-  private _configTimingKey: string = 'timing_list_v1';
+  private _configTimingKey: string = environment.configStorageServiceKey;
 
   // Observables
   timing$: Observable<ITimingConfig[]> = this.timings$.asObservable();
 
-  constructor(private pomodoroService: PomodoroService) {
+  constructor(private saveStorage: SaveStorage) {
     this.onSaveSome();
   }
 
@@ -91,6 +93,6 @@ export class ConfigService {
 
   setTimings(timingList: ITimingConfig[]) {
     this.timings$.next(timingList);
-    this.pomodoroService.handleSaveStorage(this._configTimingKey, timingList);
+    this.saveStorage.onSaveStorage(this._configTimingKey, timingList);
   }
 }

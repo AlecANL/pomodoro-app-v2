@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from '@shared/shared.module';
 
@@ -22,6 +23,11 @@ import { ModalComponent } from './components/modal/modal.component';
     SvgComponent,
     ModalComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, SharedModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SharedModule,
+    BrowserAnimationsModule,
+  ],
 })
 export class TimerModule {}
