@@ -5,6 +5,7 @@
 body {
   @apply bg-violet
   text-moonraker;
+  background: #000;
 }
 
 #app {
